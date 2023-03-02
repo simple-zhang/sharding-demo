@@ -1,6 +1,7 @@
 package com.yl.user.application.factory;
 
 import com.yl.common.enums.DelFlagEnum;
+import com.yl.common.utils.UUIDUtils;
 import com.yl.user.infrastructure.data.DataLog;
 import java.util.Date;
 

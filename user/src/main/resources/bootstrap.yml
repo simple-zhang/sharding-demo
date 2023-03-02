@@ -4,7 +4,7 @@ server:
     context-path: /user-server
 spring:
   application:
-    name: user-server
+    name: user
   cloud:
     nacos:
       discovery:
@@ -46,12 +46,22 @@ spring:
           data_log:
             actual-data-nodes: ds0.data_log_$->{0..1}
             table-strategy:
-              inline:
+              standard:
                 sharding-column: log_id
-                algorithm-expression: data_log_$->{log_id % 2}
+                sharding-algorithm-name: data_log_inline
+            key-generate-strategy:
+              column: log_id
+              key-generator-name: snowflake
+        key-generators:
+          snowflake:
+            type: SNOWFLAKE
+        sharding-algorithms:
+          data_log_inline:
+            type: inline
+            props:
+              algorithm-expression: data_log_$->{log_id % 2}
     props:
-      sql:
-        show: true
+      sql-show: true
 
 logging:
   config: classpath:log4j2-dev.xml

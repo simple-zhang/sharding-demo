@@ -1,6 +1,7 @@
 package com.yl.user.application.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yl.user.application.domain.req.DataLogInsertReq;
 import com.yl.user.application.domain.req.DataLogPageReq;
 import com.yl.user.application.domain.resp.DataLogPageResp;
 import com.yl.user.application.service.IDataLogService;
@@ -33,5 +34,10 @@ public class DataLogController {
     @PutMapping("/init")
     public void init(@RequestParam Integer dataSize) {
         dataLogService.init(dataSize);
+    }
+
+    @PostMapping("/insert")
+    public void insert(@RequestBody DataLogInsertReq req) {
+        dataLogService.insert(req);
     }
 }

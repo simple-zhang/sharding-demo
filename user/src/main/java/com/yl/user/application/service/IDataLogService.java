@@ -2,6 +2,7 @@ package com.yl.user.application.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yl.user.application.domain.req.DataLogInsertReq;
 import com.yl.user.application.domain.req.DataLogPageReq;
 import com.yl.user.application.domain.resp.DataLogPageResp;
 import com.yl.user.infrastructure.data.DataLog;
@@ -26,4 +27,11 @@ public interface IDataLogService extends IService<DataLog> {
      * @param dataSize per data size
      */
     void init(Integer dataSize);
+
+    /**
+     * insert
+     *
+     * @param req insertReq
+     */
+    void insert(DataLogInsertReq req);
 }

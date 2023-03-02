@@ -1,10 +1,12 @@
 package com.yl.user.core.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.yl.user.application.constant.DataLogConstant;
+import com.yl.user.application.domain.req.DataLogInsertReq;
 import com.yl.user.application.domain.req.DataLogPageReq;
 import com.yl.user.application.domain.resp.DataLogPageResp;
 import com.yl.user.application.factory.DataLogFactory;
@@ -71,5 +73,11 @@ public class DataLogServiceImpl extends ServiceImpl<DataLogMapper, DataLog> impl
                 this.saveBatch(list);
             }, executor);
         }
+    }
+
+    @Override
+    public void insert(DataLogInsertReq req) {
+        log.info("insert log,data:{}", JSON.toJSONString(req.toEntry()));
+        baseMapper.insert(req.toEntry());
     }
 }

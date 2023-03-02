@@ -6,6 +6,9 @@ package com.yl.common.enums;
  */
 public enum DelFlagEnum {
 
+    /**
+     * NO
+     */
     NO(0),
     /**
      * YES

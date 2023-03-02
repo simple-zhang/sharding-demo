@@ -7,9 +7,12 @@ package com.yl.common.enums;
 public enum DelFlagEnum {
 
     NO(0),
+    /**
+     * YES
+     */
     YES(1),
     ;
-    private Integer code;
+    private final Integer code;
 
     DelFlagEnum(Integer code) {
         this.code = code;

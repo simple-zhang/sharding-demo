@@ -1,0 +1,84 @@
+server:
+  port: 20010
+  servlet:
+    context-path: /user-server
+spring:
+  application:
+    name: user-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: xxx.xxx.xxx.87:8849
+  zipkin:
+    base-url: http://xxx.xxx.xxx.87:9411
+  sleuth:
+    sampler:
+      percentage: 1.0
+  #  datasource:
+  #    url: jdbc:mysql://xxx.xxx.xxx.143:3310/ycrmdb_zfh?rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+  #    username: ycrmdb_zfh
+  #    password: ycrmdb_zfh
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    type: com.alibaba.druid.pool.DruidDataSource
+  #    initialSize: 5
+  #    minIdle: 5
+  #    maxActive: 50
+  #    maxWait: 60000
+  #    slowSqlMillis: 500
+  #    filters: stat,wall,log4j
+  #    druid:
+  #      #filters: stat,wall,log4j
+  #      stat-view-servlet:
+  #        login-username: admin
+  #        login-password: admin
+  shardingsphere:
+    datasource:
+      names: ds0
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://xxx.xxx.xxx.143:3310/ycrmdb_zfh?rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+        username: ycrmdb_zfh
+        password: ycrmdb_zfh
+    rules:
+      sharding:
+        tables:
+          data_log:
+            actual-data-nodes: ds0.data_log_$->{0..1}
+            table-strategy:
+              inline:
+                sharding-column: log_id
+                algorithm-expression: data_log_$->{log_id % 2}
+    props:
+      sql:
+        show: true
+
+logging:
+  config: classpath:log4j2-dev.xml
+  level:
+    com.yl.**.dao: INFO
+    org.springframework.boot.autoconfigure: INFO
+    com.alibaba.cloud.stream.binder.rocketmq: ERROR
+    org.apache.rocketmq: ERROR
+    org.springframework.cloud.stream: ERROR
+    io.netty.channel.nio.selector: OFF
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+ribbon:
+  OkToRetryOnAllOperations: false
+  ReadTimeout: 20000
+  ConnectTimeout: 30000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+redisson:
+  enable: true
+  model: SINGLE
+  password: itdev
+  singleServerConfig:
+    address: xxx.xxx.xxx.87:6380
+  pingConnectionInterval: 10000
